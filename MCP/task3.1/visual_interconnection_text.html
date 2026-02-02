@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Structure: Interconnections - RecNet: Self-Evolving Preference Propagation for Agentic Recommender Systems</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            color: #eee;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.4em; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 0.9em; }
+        
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+        
+        .network-panel {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            overflow: auto;
+        }
+        
+        .network-svg {
+            width: 100%;
+            height: 600px;
+        }
+        
+        .detail-panel {
+            width: 380px;
+            background: #16213e;
+            padding: 20px;
+            border-left: 1px solid #333;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+        }
+        .detail-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .detail-content {
+            margin-top: 15px;
+        }
+        .detail-text {
+            background: #0f1629;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+        .node {
+            cursor: pointer;
+        }
+        .link {
+            stroke: #667eea;
+            stroke-opacity: 0.6;
+            stroke-width: 2;
+        }
+        .node-label {
+            font-size: 12px;
+            fill: #eee;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>RecNet: Self-Evolving Preference Propagation for Agentic Recommender Systems</h1>
+        <p>Interactive Network Visualization - Click nodes to explore connections</p>
+    </div>
+    <div class="main-container">
+        <div class="network-panel">
+            <svg class="network-svg" id="network-svg"></svg>
+        </div>
+        <div class="detail-panel">
+            <div class="detail-title">Section Details</div>
+            <div class="detail-content" id="details">
+                <p style="color: #888;">Click on a node in the network to see details</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sections = [{"id": 0, "name": "Introduction", "text": "Recently, Large Language Models (LLMs) have demonstrated remarkable capabilities in text understanding and generation~[citation: zhao2023survey, wang2024survey], and have been increasingly leveraged a...", "level": 1, "group": "Introduction"}, {"id": 1, "name": "Methodology", "text": "Overview of Our Approach Problem Formulation. In traditional recommender systems, given a set of users [U], a set of items [I], and their interaction records, the goal is to model user preferences fro...", "level": 1, "group": "Methodology"}, {"id": 2, "name": "Overview of Our Approach", "text": "Problem Formulation. In traditional recommender systems, given a set of users [U], a set of items [I], and their interaction records, the goal is to model user preferences from historical interactions...", "level": 2, "group": "Methodology"}, {"id": 3, "name": "Centralized Preference Routing", "text": "To effectively model preference propagation in recommender systems, several key requirements must be satisfied. First, the propagation process should be precise and selective. The updated preference i...", "level": 2, "group": "Methodology"}, {"id": 4, "name": "Initialization of Centralized Preference Routing", "text": "The first step of the centralized preference routing module is to enable router agents to accurately perceive and integrate newly updated preference information from client agents, including both user...", "level": 3, "group": "Methodology"}, {"id": 5, "name": "Client-to-Router Preference Perception and Integration", "text": "At each time step [t], when certain clients’ preferences or characteristics change, the fine-grained dynamics are captured in the updates to [A_c], and the updated attributes are aggregated into a lis...", "level": 3, "group": "Methodology"}, {"id": 6, "name": "Router-to-Client Multicast Preference Routing", "text": "After preference perception and integration, the next step is to dynamically construct the connections between router agents and client agents, so that they can route their preference information to h...", "level": 3, "group": "Methodology"}, {"id": 7, "name": "Personalized Preference Reception", "text": "With the Preference Routing mechanism, every client agent can receive updated and condensed preference information from similar users or items in a timely and dynamic manner. However, directly fusing ...", "level": 2, "group": "Methodology"}, {"id": 8, "name": "Queue-Based Buffer for Preference Information Caching", "text": "Continuously merging propagated preferences based solely on propagation frequency, rather than personalized interaction frequency, can quickly distort a profile, especially for users or items with inf...", "level": 3, "group": "Methodology"}, {"id": 9, "name": "Rule-based Filter Memory for Preference Information Integration", "text": "Different users or items may personalize how they integrate propagated preference information, even when receiving the same updates. Such personalization depends not only on current preferences, but a...", "level": 3, "group": "Methodology"}, {"id": 10, "name": "Feedback-driven Propagation Optimization", "text": "figure[] skip=5pt [width=0.87]./figs/optimization.pdf The operation of module optimizer considering different optimized modules. -10pt figure With centralized preference routing and personalized prefe...", "level": 2, "group": "Methodology"}, {"id": 11, "name": "The Workflow of RecNet", "text": "Self-evolving Workflow. By integrating the forward propagation and backward optimization phases, we construct the complete workflow of RecNet, forming a continual and self-evolving structure. From the...", "level": 2, "group": "Methodology"}, {"id": 12, "name": "Experiment", "text": "Experiment Setup Dataset Following previous work, we conduct experiments on three text-intensive subsets of Amazon review dataset: \"CDs and Vinyl\", \"Office Products\", and \"Mus...", "level": 1, "group": "Experiment"}, {"id": 13, "name": "Experiment Setup", "text": "Dataset Following previous work, we conduct experiments on three text-intensive subsets of Amazon review dataset: \"CDs and Vinyl\", \"Office Products\", and \"Musical Instruments\". E...", "level": 2, "group": "Experiment"}, {"id": 14, "name": "Dataset", "text": "Following previous work, we conduct experiments on three text-intensive subsets of Amazon review dataset: \"CDs and Vinyl\", \"Office Products\", and \"Musical Instruments\". E...", "level": 3, "group": "Experiment"}, {"id": 15, "name": "Baseline Models", "text": "We employ the following baselines: (1) Traditional recommendation models: [] Pop ranks candidates based on their popularity, which is measured by the number of interactions. [] BPR~[citation: bpr] lev...", "level": 3, "group": "Experiment"}, {"id": 16, "name": "Evaluataion Settings", "text": "To evaluate the performance, we take NDCG@K as a metric, where K is set to 1, 5 and 10. We employ the leave-one-out strategy for evaluation. Specifically, we consider the last item in each historical ...", "level": 3, "group": "Experiment"}, {"id": 17, "name": "Implementation Details", "text": "We select Deepseek-R1-Distill-Qwen-32B as the backbone model for our main experiments. The initial router number [K] is selected within 5, 10, 15, 20, 40, and the threshold [] for preference routing i...", "level": 3, "group": "Experiment"}, {"id": 18, "name": "Overall Performance", "text": "The overall results of RecNet compared with other baselines are shown in Table~[ref: tab:main_res]. We can find: Our proposed RecNet consistently outperforms the baselines across most evaluation metri...", "level": 2, "group": "Experiment"}, {"id": 19, "name": "Ablation Studies", "text": "To validate the effectiveness of each modules in RecNet, we conduct ablation studies on the CDs and Office datasets, as shown in Table~[ref: tab:other_method] (1) w/o CPR eliminates the centralized pr...", "level": 2, "group": "Experiment"}, {"id": 20, "name": "Further Analysis", "text": "Performance Comparison Different Model Backbones figure[h] skip=5pt [width=0.9]./figs/backbone-www.pdf Performance comparison different backbone models on CDs and Office. % -10pt figure To evaluate th...", "level": 2, "group": "Experiment"}, {"id": 21, "name": "Performance Comparison Different Model Backbones", "text": "figure[h] skip=5pt [width=0.9]./figs/backbone-www.pdf Performance comparison different backbone models on CDs and Office. % -10pt figure To evaluate the generalizability of RecNet across different mod...", "level": 3, "group": "Experiment"}, {"id": 22, "name": "Evolution of RecNet Different Initial Router Numbers", "text": "With Feedback-Driven Propagation Optimization, the attributes of router agents, including their quantities and router profiles, are dynamically updated. Hence, to demonstrate the evolution of router a...", "level": 3, "group": "Experiment"}, {"id": 23, "name": "Performance Comparison cold-start users and items", "text": "figure[h] skip=5pt [width=0.9]./figs/Cold-start.pdf Performance comparison RecNet-augmented cold-start items and cold-start users. figure Traditional recommender systems face challenges in recommendin...", "level": 3, "group": "Experiment"}, {"id": 24, "name": "Different Propagation Methods", "text": "table[h] skip=5pt Performance comparison different propagation methods. % 0.75!{ 0.95 tabularlcccc 1c{2*Methods} &amp; 2cCDs &amp; 2cOffice (l)2-3 (l", "level": 3, "group": "Experiment"}, {"id": 25, "name": "Efficiency Analysis", "text": "table[h] skip=5pt Efficiency analysis of different agentic recommender systems and preference propagation strategies. % 0.91!{ 0.95 tabularlcccc 1c{2*Methods} &amp; 2*Complexity &amp;", "level": 3, "group": "Experiment"}, {"id": 26, "name": "Related work", "text": "LLM-based Agents. LLM-based agents have gained extensive attention as a step toward artificial general intelligence~(AGI)~[citation: exploring, rise, agent4rec]. Unlike conventional static prompt–resp...", "level": 1, "group": "Related work"}, {"id": 27, "name": "Conclusion", "text": "In this work, we presented RecNet, a self-evolving preference propagation framework designed to address the limitations of interaction-driven agentic recommender systems. By introducing a centralized ...", "level": 1, "group": "Conclusion"}];
+        const connections = [{"source": "Introduction", "target": "Methodology", "type": "sequential"}, {"source": "Introduction", "target": "Methodology", "type": "semantic"}, {"source": "Methodology", "target": "Experiment", "type": "sequential"}, {"source": "Methodology", "target": "Overview of Our Approach", "type": "hierarchical"}, {"source": "Methodology", "target": "Centralized Preference Routing", "type": "hierarchical"}, {"source": "Centralized Preference Routing", "target": "Initialization of Centralized Preference Routing", "type": "hierarchical"}, {"source": "Centralized Preference Routing", "target": "Client-to-Router Preference Perception and Integration", "type": "hierarchical"}, {"source": "Centralized Preference Routing", "target": "Router-to-Client Multicast Preference Routing", "type": "hierarchical"}, {"source": "Methodology", "target": "Personalized Preference Reception", "type": "hierarchical"}, {"source": "Personalized Preference Reception", "target": "Queue-Based Buffer for Preference Information Caching", "type": "hierarchical"}, {"source": "Personalized Preference Reception", "target": "Rule-based Filter Memory for Preference Information Integration", "type": "hierarchical"}, {"source": "Methodology", "target": "Feedback-driven Propagation Optimization", "type": "hierarchical"}, {"source": "Methodology", "target": "The Workflow of RecNet", "type": "hierarchical"}, {"source": "Methodology", "target": "Experiment", "type": "semantic"}, {"source": "Experiment", "target": "Related work", "type": "sequential"}, {"source": "Experiment", "target": "Experiment Setup", "type": "hierarchical"}, {"source": "Experiment Setup", "target": "Dataset", "type": "hierarchical"}, {"source": "Experiment Setup", "target": "Baseline Models", "type": "hierarchical"}, {"source": "Experiment Setup", "target": "Evaluataion Settings", "type": "hierarchical"}, {"source": "Experiment Setup", "target": "Implementation Details", "type": "hierarchical"}, {"source": "Experiment", "target": "Overall Performance", "type": "hierarchical"}, {"source": "Experiment", "target": "Ablation Studies", "type": "hierarchical"}, {"source": "Experiment", "target": "Further Analysis", "type": "hierarchical"}, {"source": "Further Analysis", "target": "Performance Comparison Different Model Backbones", "type": "hierarchical"}, {"source": "Further Analysis", "target": "Evolution of RecNet Different Initial Router Numbers", "type": "hierarchical"}, {"source": "Further Analysis", "target": "Performance Comparison cold-start users and items", "type": "hierarchical"}, {"source": "Further Analysis", "target": "Different Propagation Methods", "type": "hierarchical"}, {"source": "Further Analysis", "target": "Efficiency Analysis", "type": "hierarchical"}, {"source": "Experiment", "target": "Conclusion", "type": "semantic"}, {"source": "Related work", "target": "Conclusion", "type": "sequential"}, {"source": "Related work", "target": "Introduction", "type": "semantic"}, {"source": "Related work", "target": "Methodology", "type": "semantic"}];
+        
+        const width = document.querySelector('.network-panel').clientWidth;
+        const height = 600;
+        
+        // Color scale based on group (root section)
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+        const svg = d3.select("#network-svg")
+            .attr("width", width)
+            .attr("height", height);
+        
+        // Create force simulation
+        const simulation = d3.forceSimulation(sections)
+            .force("link", d3.forceLink(connections).id(d => d.name || d.id))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(d => {
+                const baseRadius = d.level === 1 ? 20 : (d.level === 2 ? 10 : 6);
+                return baseRadius + 8; // Add padding for collision
+            }));
+        
+        // Create links
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(connections)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("stroke-width", d => {
+                if (d.type === "hierarchical") return 3;
+                if (d.type === "sequential") return 2.5;
+                if (d.type === "semantic") return 2;
+                return 1.5;
+            })
+            .attr("stroke", d => {
+                // Use source node's group color for links, but dim it
+                return "#999"; 
+            })
+            .attr("stroke-opacity", 0.4);
+        
+        // Create nodes
+        const node = svg.append("g")
+            .selectAll("circle")
+            .data(sections)
+            .enter().append("circle")
+            .attr("class", "node")
+            .attr("r", d => {
+                // Larger nodes for higher levels (Level 1 is main section)
+                if (d.level === 1) return 20;
+                if (d.level === 2) return 10;
+                return 6;
+            })
+            .attr("fill", d => colorScale(d.group || d.name))
+            .attr("stroke", "#fff")
+            .attr("stroke-width", 1.5)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .on("click", function(event, d) {
+                showDetails(d);
+            });
+        
+        // Add labels
+        const label = svg.append("g")
+            .selectAll("text")
+            .data(sections)
+            .enter().append("text")
+            .attr("class", "node-label")
+            .text(d => d.name)
+            .attr("dx", 12)
+            .attr("dy", 4);
+        
+        // Update positions on simulation tick
+        simulation.on("tick", () => {
+            if (connections.length > 0) {
+                link
+                    .attr("x1", d => d.source.x || d.source)
+                    .attr("y1", d => d.source.y || d.source)
+                    .attr("x2", d => d.target.x || d.target)
+                    .attr("y2", d => d.target.y || d.target);
+            }
+            
+            node
+                .attr("cx", d => d.x || width / 2)
+                .attr("cy", d => d.y || height / 2);
+            
+            label
+                .attr("x", d => (d.x || width / 2) + 12)
+                .attr("y", d => (d.y || height / 2) + 4);
+        });
+        
+        // If no connections, arrange nodes in a circle
+        if (connections.length === 0) {
+            const angleStep = (2 * Math.PI) / sections.length;
+            sections.forEach((d, i) => {
+                const angle = i * angleStep;
+                d.x = width / 2 + Math.cos(angle) * (width / 3);
+                d.y = height / 2 + Math.sin(angle) * (height / 3);
+                d.fx = d.x;
+                d.fy = d.y;
+            });
+            simulation.alpha(0).restart();
+        }
+        
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        function showDetails(d) {
+            const detailsDiv = document.getElementById("details");
+            const relatedConnections = connections.filter(c => 
+                c.source === d.name || c.target === d.name
+            );
+            
+            let html = `
+                <h3 style="color: ${colorScale(d.group || d.name)}; margin-bottom: 10px;">${d.name}</h3>
+                <p style="color: #aaa; font-size: 0.85em; margin-bottom: 5px;">Chapter: ${d.group || "Root"}</p>
+                <p style="color: #aaa; font-size: 0.85em; margin-bottom: 15px;">Level ${d.level} Section</p>
+                <div class="detail-text">
+                    <strong>Text Excerpt:</strong><br>
+                    ${d.text || "No text excerpt available"}
+                </div>
+            `;
+            
+            if (relatedConnections.length > 0) {
+                html += `<div style="margin-top: 15px;">
+                    <strong style="color: #667eea;">Connections (${relatedConnections.length}):</strong>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                `;
+                relatedConnections.forEach(conn => {
+                    const other = conn.source === d.name ? conn.target : conn.source;
+                    html += `<li style="margin: 5px 0; color: #ccc;">${conn.type}: ${other}</li>`;
+                });
+                html += `</ul></div>`;
+            }
+            
+            detailsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
