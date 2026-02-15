@@ -5,11 +5,12 @@
 **What aspects of academic writing do you find most challenging?**
 Ensuring logical flow and coherence between paragraphs and sentences.
 
-**What specific difficulties do you face when writing Introduction/Literature Review?**
+**What specific difficulties do you face when writing Introduction/Literature Review**
 I struggle with crafting a clear and compelling narrative for the research motivation, specifically in making the storytelling aspect of the introduction more engaging and logical.
 
 **What do you struggle with most?**
 I find it challenging to express complex critical analyses concisely. Detailed critique often seems to require extensive explanation, but using too many words can make the writing verbose and repetitive. Balancing precision with brevity is my biggest struggle.
+
 ---
 
 ## My Writing Process
@@ -42,6 +43,7 @@ I use AI to assist with brainstorming, but I always write the first draft myself
 
 **What do you find helpful or not helpful about AI assistance?**
 I find AI most helpful for refining my writing and correcting grammatical errors after I have completed the initial draft. However, it cannot effectively help me structure my writing logically from the start, nor can it reliably write the literature review, as it often hallucinates and may cite non-existent references.
+
 ---
 
 ## My Goals
