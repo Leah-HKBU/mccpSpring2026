@@ -73,7 +73,7 @@ Q8. Is the LLM advantage consistent across both domains?
 - Model dependence. The strongest results rely on frontier-scale LLMs; small models do not work well.
 - Prompt sensitivity. Performance depends on prompt design, which limits reproducibility unless prompts are released in full.
 
-**12. What's next?**
+**Q12. What's next?**
 - Extend to additional domains (news, music, short-video).
 - Study temporal dynamics — does LLM-predicted serendipity correlate with downstream engagement?
 - Explore fine-tuning open-weight LLMs on user-study data to close the gap with GPT-4 at lower cost.
